@@ -59,69 +59,73 @@ export default {
           unit: ''
         },
         {
-          title: '隧道',
+          title: this.$i18n.t('digitalFlop.digitalFlopData.hardware'),
           number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
+            content: 'BCM2835',
             textAlign: 'right',
             style: {
               fill: '#f46827',
               fontWeight: 'bold'
             }
-          },
-          unit: '个'
+          }
         },
         {
-          title: '服务区',
+          title: this.$i18n.t('digitalFlop.digitalFlopData.implementer'),
           number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
+            content: '0x41',
             textAlign: 'right',
             style: {
               fill: '#40faee',
               fontWeight: 'bold'
             }
           },
-          unit: '个'
+          unit: ''
         },
         {
-          title: '收费站',
+          title: this.$i18n.t('digitalFlop.digitalFlopData.part'),
           number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
+            content: '0xd08',
+            textAlign: 'right',
+            style: {
+              fill: '#4d99fc',
+              fontWeight: 'bold'
+            }
+          }
+        },
+        {
+          title: this.$i18n.t('digitalFlop.digitalFlopData.revision2'),
+          number: {
+            content: 'c03112',
+            textAlign: 'right',
+            style: {
+              fill: '#f46827',
+              fontWeight: 'bold'
+            }
+          }
+        },
+        {
+          title: this.$i18n.t('digitalFlop.digitalFlopData.totalMem'),
+          number: {
+            content: '3886',
+            textAlign: 'right',
+            style: {
+              fill: '#40faee',
+              fontWeight: 'bold'
+            }
+          },
+          unit: 'MB'
+        },
+        {
+          title: this.$i18n.t('digitalFlop.digitalFlopData.diskCapacity'),
+          number: {
+            content: '59',
             textAlign: 'right',
             style: {
               fill: '#4d99fc',
               fontWeight: 'bold'
             }
           },
-          unit: '个'
-        },
-        {
-          title: '超限站',
-          number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#f46827',
-              fontWeight: 'bold'
-            }
-          },
-          unit: '个'
-        },
-        {
-          title: '停车区',
-          number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#40faee',
-              fontWeight: 'bold'
-            }
-          },
-          unit: '个'
+          unit: 'GB'
         }
       ]
     },

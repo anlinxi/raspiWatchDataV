@@ -8,6 +8,7 @@ const LOCALE_KEY = 'localeLanguage'
 
 const locales = {
   zh: require('./zh.json')
+  // language file add there
 }
 
 const i18n = new VueI18n({

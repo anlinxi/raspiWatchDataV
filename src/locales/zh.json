@@ -5,7 +5,14 @@
   "digitalFlop": {
     "digitalFlopData": {
       "startTime": "启动时间",
-      "now": "当前时间"
+      "now": "当前时间",
+      "hardware": "硬件版本",
+      "implementer": "实现版本",
+      "part": "部分版本",
+      "revision2": "修订版本",
+      "serial": "序列号",
+      "totalMem": "内存大小",
+      "diskCapacity": "硬盘容量"
     }
   }
 }
