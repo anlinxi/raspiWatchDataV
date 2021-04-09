@@ -9,7 +9,7 @@
       <div class="digital-flop">
         <dv-digital-flop
           :config="item.number"
-          style="width:100px;height:50px;"
+          style="width:100%;height:50px;"
         />
           <div class="unit">{{ item.unit }}</div>
       </div>
@@ -30,12 +30,13 @@ export default {
   methods: {
     createData () {
       const { randomExtend } = this
-
+      let now = this.getDate('time')
+      console.log(now)
       this.digitalFlopData = [
         {
-          title: '管养里程',
+          title: this.$i18n.t('digitalFlop.digitalFlopData.startTime'),
           number: {
-            number: [randomExtend(20000, 30000)],
+            number: [randomExtend(10, 10000)],
             content: '{nt}',
             textAlign: 'right',
             style: {
@@ -43,46 +44,19 @@ export default {
               fontWeight: 'bold'
             }
           },
-          unit: '公里'
+          unit: '小时'
         },
         {
-          title: '桥梁',
+          title: this.$i18n.t('digitalFlop.digitalFlopData.now'),
           number: {
-            number: [randomExtend(20, 30)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#f46827',
-              fontWeight: 'bold'
-            }
-          },
-          unit: '座'
-        },
-        {
-          title: '涵洞隧道',
-          number: {
-            number: [randomExtend(20, 30)],
-            content: '{nt}',
+            content: now,
             textAlign: 'right',
             style: {
               fill: '#40faee',
               fontWeight: 'bold'
             }
           },
-          unit: '个'
-        },
-        {
-          title: '匝道',
-          number: {
-            number: [randomExtend(10, 20)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#4d99fc',
-              fontWeight: 'bold'
-            }
-          },
-          unit: '个'
+          unit: ''
         },
         {
           title: '隧道',
@@ -157,6 +131,36 @@ export default {
       } else {
         return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
       }
+    },
+    /**
+     * @param {Number} num 数值
+     * @returns {String} 处理后的字符串
+     * @description 如果传入的数值小于10，即位数只有1位，则在前面补充0
+     */
+    getHandledValue (num) {
+      return num < 10 ? '0' + num : num
+    },
+    /**
+     * @param {Date} time 传入的时间,默认为''
+     * @param {Boolen} type 要返回的时间字符串的格式类型，传入true则返回带时分秒的完整时间
+     */
+    getDate (type) {
+      let d = new Date()
+      let year = d.getFullYear()
+      let month = this.getHandledValue(d.getMonth() + 1)
+      let date = this.getHandledValue(d.getDate())
+      let hours = this.getHandledValue(d.getHours())
+      let minutes = this.getHandledValue(d.getMinutes())
+      let second = this.getHandledValue(d.getSeconds())
+      let resStr = ''
+      if (type === 'time') {
+        resStr = hours + ':' + minutes + ':' + second
+      } else if (type === 'date') {
+        resStr = year + '-' + month + '-' + date
+      } else {
+        resStr = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + second
+      }
+      return resStr
     }
   },
   mounted () {
