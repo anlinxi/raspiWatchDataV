@@ -14,5 +14,8 @@
       "totalMem": "内存大小",
       "diskCapacity": "硬盘容量"
     }
+  },
+  "waterLevelChart": {
+    "title": "CPU使用情况监控"
   }
 }

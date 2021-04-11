@@ -27,6 +27,26 @@ export default {
       digitalFlopData: []
     }
   },
+  props: {
+    // 树莓派信息
+    raspiInfo: {
+      type: Object
+    }
+  },
+  /**
+   * 监听
+   */
+  watch: {
+    raspiInfo: {
+      // 深度监听，可监听到对象、数组的变化
+      handler (val, oldVal) {
+        // console.log('raspiInfo', val)
+        this.loadData(val)
+      },
+      // true 深度监听
+      deep: true
+    }
+  },
   methods: {
     createData () {
       const { randomExtend } = this
@@ -128,6 +148,108 @@ export default {
           unit: 'GB'
         }
       ]
+    },
+    loadData (raspiInfo) {
+      if (raspiInfo) {
+        const { randomExtend } = this
+        let now = this.getDate('time')
+        this.digitalFlopData = [
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.startTime'),
+            number: {
+              number: [randomExtend(10, 10000)],
+              content: '{nt}',
+              textAlign: 'right',
+              style: {
+                fill: '#4d99fc',
+                fontWeight: 'bold'
+              }
+            },
+            unit: '小时'
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.now'),
+            number: {
+              content: now,
+              textAlign: 'right',
+              style: {
+                fill: '#40faee',
+                fontWeight: 'bold'
+              }
+            },
+            unit: ''
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.hardware'),
+            number: {
+              content: raspiInfo.cpuInfo.hardware,
+              textAlign: 'right',
+              style: {
+                fill: '#f46827',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.implementer'),
+            number: {
+              content: raspiInfo.cpuInfo.implementer,
+              textAlign: 'right',
+              style: {
+                fill: '#40faee',
+                fontWeight: 'bold'
+              }
+            },
+            unit: ''
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.part'),
+            number: {
+              content: raspiInfo.cpuInfo.part,
+              textAlign: 'right',
+              style: {
+                fill: '#4d99fc',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.revision2'),
+            number: {
+              content: raspiInfo.cpuInfo.revision2,
+              textAlign: 'right',
+              style: {
+                fill: '#f46827',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.totalMem'),
+            number: {
+              content: raspiInfo.memUseInfoList[0].total.replace('MB', ''),
+              textAlign: 'right',
+              style: {
+                fill: '#40faee',
+                fontWeight: 'bold'
+              }
+            },
+            unit: 'MB'
+          },
+          {
+            title: this.$i18n.t('digitalFlop.digitalFlopData.diskCapacity'),
+            number: {
+              content: raspiInfo.diskUseInfoList[0].capacity,
+              textAlign: 'right',
+              style: {
+                fill: '#4d99fc',
+                fontWeight: 'bold'
+              }
+            },
+            unit: 'GB'
+          }
+        ]
+      }
     },
     randomExtend (minNum, maxNum) {
       if (arguments.length === 1) {

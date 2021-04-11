@@ -1,9 +1,9 @@
 <template>
   <div id="water-level-chart">
-    <div class="water-level-chart-title">计划资金累计完成情况</div>
+    <div class="water-level-chart-title">{{ $t('waterLevelChart.title') }}</div>
 
     <div class="water-level-chart-details">
-      累计完成<span>235,680</span>元
+      当前温度<span>{{ temperature }}</span>℃
     </div>
 
     <div class="chart-container">
@@ -18,11 +18,46 @@ export default {
   data () {
     return {
       config: {
-        data: [45],
+        data: [0],
+        shape: 'round',
+        waveHeight: 25,
+        waveNum: 2
+      },
+      temperature: 0
+    }
+  },
+  props: {
+    // 树莓派信息
+    raspiInfo: {
+      type: Object
+    }
+  },
+  /**
+   * 监听
+   */
+  watch: {
+    raspiInfo: {
+      // 深度监听，可监听到对象、数组的变化
+      handler (val, oldVal) {
+        // console.log('raspiInfo', val)
+        this.loadData(val)
+      },
+      // true 深度监听
+      deep: true
+    }
+  },
+  methods: {
+    loadData (raspiInfo) {
+      let cpu = raspiInfo.cpuUseInfo.replace('%', '')
+      cpu = parseFloat(cpu)
+      this.config = {
+        data: [cpu],
         shape: 'round',
         waveHeight: 25,
         waveNum: 2
       }
+      this.temperature = raspiInfo.temperature.replace('℃', '')
+      this.$forceUpdate()
     }
   }
 }
