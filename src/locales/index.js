@@ -7,8 +7,9 @@ const DEFAULT_LANG = 'zh'
 const LOCALE_KEY = 'localeLanguage'
 
 const locales = {
-  zh: require('./zh.json')
+  zh: require('./zh.json'),
   // language file add there
+  en: require('./en.json')
 }
 
 const i18n = new VueI18n({

@@ -1,0 +1,21 @@
+{
+  "topHeader": {
+    "title": "Raspberry pi monitoring center"
+  },
+  "digitalFlop": {
+    "digitalFlopData": {
+      "startTime": "startTime",
+      "now": "now",
+      "hardware": "hardware",
+      "implementer": "implementer",
+      "part": "part",
+      "revision2": "revision",
+      "serial": "serial",
+      "totalMem": "totalMem",
+      "diskCapacity": "diskCapacity"
+    }
+  },
+  "waterLevelChart": {
+    "title": "CPU info"
+  }
+}
