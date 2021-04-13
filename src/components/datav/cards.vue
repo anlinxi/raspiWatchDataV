@@ -62,66 +62,66 @@ export default {
     createData () {
       const { randomExtend } = this
 
-      this.cards = new Array(5).fill(0).map((foo, i) => ({
-        title: '占用情况' + (i + i),
-        total: {
-          number: [randomExtend(9000, 10000)],
-          content: '{nt}',
-          textAlign: 'right',
-          style: {
-            fill: '#ea6027',
-            fontWeight: 'bold'
-          },
-          unit: '元'
-        },
-        num: {
-          number: [randomExtend(30, 60)],
-          content: '{nt}',
-          textAlign: 'right',
-          style: {
-            fill: '#26fcd8',
-            fontWeight: 'bold'
-          },
-          unit: '处'
-        },
-        ring: {
-          series: [
-            {
-              type: 'gauge',
-              startAngle: -Math.PI / 2,
-              endAngle: Math.PI * 1.5,
-              arcLineWidth: 13,
-              radius: '80%',
-              data: [
-                { name: '使用情况', value: randomExtend(40, 60) }
-              ],
-              axisLabel: {
-                show: false
-              },
-              axisTick: {
-                show: false
-              },
-              pointer: {
-                show: false
-              },
-              backgroundArc: {
-                style: {
-                  stroke: '#224590'
-                }
-              },
-              details: {
-                show: true,
-                formatter: '使用情况{value}%',
-                style: {
-                  fill: '#1ed3e5',
-                  fontSize: 20
-                }
-              }
-            }
-          ],
-          color: ['#03d3ec']
-        }
-      }))
+      // this.cards = new Array(5).fill(0).map((foo, i) => ({
+      //   title: '占用情况' + (i + i),
+      //   total: {
+      //     number: [randomExtend(9000, 10000)],
+      //     content: '{nt}',
+      //     textAlign: 'right',
+      //     style: {
+      //       fill: '#ea6027',
+      //       fontWeight: 'bold'
+      //     },
+      //     unit: '元'
+      //   },
+      //   num: {
+      //     number: [randomExtend(30, 60)],
+      //     content: '{nt}',
+      //     textAlign: 'right',
+      //     style: {
+      //       fill: '#26fcd8',
+      //       fontWeight: 'bold'
+      //     },
+      //     unit: '处'
+      //   },
+      //   ring: {
+      //     series: [
+      //       {
+      //         type: 'gauge',
+      //         startAngle: -Math.PI / 2,
+      //         endAngle: Math.PI * 1.5,
+      //         arcLineWidth: 13,
+      //         radius: '80%',
+      //         data: [
+      //           { name: '使用情况', value: randomExtend(40, 60) }
+      //         ],
+      //         axisLabel: {
+      //           show: false
+      //         },
+      //         axisTick: {
+      //           show: false
+      //         },
+      //         pointer: {
+      //           show: false
+      //         },
+      //         backgroundArc: {
+      //           style: {
+      //             stroke: '#224590'
+      //           }
+      //         },
+      //         details: {
+      //           show: true,
+      //           formatter: '使用情况{value}%',
+      //           style: {
+      //             fill: '#1ed3e5',
+      //             fontSize: 20
+      //           }
+      //         }
+      //       }
+      //     ],
+      //     color: ['#03d3ec']
+      //   }
+      // }))
     },
     /**
      * 加载数据
@@ -172,7 +172,7 @@ export default {
           unit: '℃'
         },
         ring: {
-          name: ' ',
+          name: '温度 ',
           value: temp / maxTemperature * 100
         }
       })
