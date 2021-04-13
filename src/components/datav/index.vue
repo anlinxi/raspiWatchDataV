@@ -19,7 +19,7 @@
               <scroll-board />
             </div>
 
-            <cards />
+            <cards :raspiInfo = 'raspiInfo'/>
           </div>
         </div>
       </div>

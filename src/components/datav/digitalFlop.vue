@@ -49,14 +49,13 @@ export default {
   },
   methods: {
     createData () {
-      const { randomExtend } = this
+      // const { randomExtend } = this
       let now = this.getDate('time')
-      console.log(now)
       this.digitalFlopData = [
         {
           title: this.$i18n.t('digitalFlop.digitalFlopData.startTime'),
           number: {
-            number: [randomExtend(10, 10000)],
+            number: [0],
             content: '{nt}',
             textAlign: 'right',
             style: {
@@ -151,14 +150,18 @@ export default {
     },
     loadData (raspiInfo) {
       if (raspiInfo) {
-        const { randomExtend } = this
+        // const { randomExtend } = this
         let now = this.getDate('time')
+        // 单位为秒
+        let startTime = raspiInfo.sysStartTime
+        startTime = startTime / 60 / 60
         this.digitalFlopData = [
           {
             title: this.$i18n.t('digitalFlop.digitalFlopData.startTime'),
             number: {
-              number: [randomExtend(10, 10000)],
+              number: [startTime],
               content: '{nt}',
+              toFixed: 2,
               textAlign: 'right',
               style: {
                 fill: '#4d99fc',
