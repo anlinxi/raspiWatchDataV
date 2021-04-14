@@ -242,7 +242,7 @@ export default {
           {
             title: this.$i18n.t('digitalFlop.digitalFlopData.diskCapacity'),
             number: {
-              content: raspiInfo.diskUseInfoList[0].capacity,
+              content: raspiInfo.diskUseInfoList[0].capacity.replace('GB', ''),
               textAlign: 'right',
               style: {
                 fill: '#4d99fc',

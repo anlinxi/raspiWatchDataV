@@ -12,17 +12,17 @@
       <dv-charts class="ring-charts" :option="card.ring"/>
       <div class="card-footer">
         <div class="card-footer-item">
-          <div class="footer-title">{{ card.total.name }}</div>
-          <div class="footer-detail">
-            <dv-digital-flop :config="card.total" style="width:70%;height:35px;"/>
-            {{ card.total.unit }}
-          </div>
-        </div>
-        <div class="card-footer-item">
           <div class="footer-title">{{ card.num.name }}</div>
           <div class="footer-detail">
             <dv-digital-flop :config="card.num" style="width:70%;height:35px;"/>
             {{ card.num.unit }}
+          </div>
+        </div>
+        <div class="card-footer-item">
+          <div class="footer-title">{{ card.total.name }}</div>
+          <div class="footer-detail">
+            <dv-digital-flop :config="card.total" style="width:70%;height:35px;"/>
+            {{ card.total.unit }}
           </div>
         </div>
       </div>
@@ -131,22 +131,79 @@ export default {
       let arr = []
       // 获取cpu使用情况图标
       arr.push(this.getCpuInfo(val))
-      // todo 获取内存使用情况图标
+      // 获取内存使用情况图标
       arr.push(this.getMemoryInfo(val))
-      // todo 获取硬盘使用情况图标
-      arr.push(this.getCpuInfo(val))
+      // 获取硬盘使用情况图标
+      let diskUseInfoList = val.diskUseInfoList
+      for (let i = 0; i < diskUseInfoList.length; i++) {
+        let diskUseInfo = diskUseInfoList[i]
+        arr.push(this.getDiskInfo(diskUseInfo))
+      }
+
       // todo 获取缓存使用情况图标
-      arr.push(this.getCpuInfo(val))
-      // todo 获取温度使用情况图标
+      arr.push(this.getCacheInfo(val))
+      // 获取温度使用情况图标
       arr.push(this.getTempInfo(val))
       this.cards = arr
+    },
+    /**
+     * 缓存使用情况
+     */
+    getCacheInfo (val) {
+      // cpu当前频率
+      let armFreq = parseInt(val.cpuInfo.armFreq)
+      armFreq = armFreq / 1000
+      // cpu占用百分比
+      let cpuUseInfo = val.cpuUseInfo.replace('%', '')
+      cpuUseInfo = parseFloat(cpuUseInfo)
+      return this.createOneCard({
+        title: '缓存使用情况',
+        toFixed: 1,
+        total: {
+          name: '总频率',
+          value: armFreq,
+          unit: 'Ghz'
+        },
+        num: {
+          name: '当前频率',
+          value: armFreq * cpuUseInfo / 100,
+          unit: 'Ghz'
+        },
+        ring: {
+          name: '使用率 ',
+          value: cpuUseInfo
+        }
+      })
+    },
+    /**
+     * 获取树莓派硬盘使用情况
+     */
+    getDiskInfo (diskUseInfo) {
+      return this.createOneCard({
+        title: '硬盘' + diskUseInfo.diskPath,
+        toFixed: 1,
+        total: {
+          name: '总容量',
+          value: diskUseInfo.capacity.replace('GB', ''),
+          unit: 'GB'
+        },
+        num: {
+          name: '使用量',
+          value: diskUseInfo.used.replace('GB', ''),
+          unit: 'GB'
+        },
+        ring: {
+          name: '使用情况 ',
+          value: parseInt(diskUseInfo.used.replace('%', ''))
+        }
+      })
     },
     /**
      * 获取温度使用情况图标
      */
     getTempInfo (val) {
       // 当前温度
-      var temp = val.temperature.replace('℃', '')
+      let temp = val.temperature.replace('℃', '')
       temp = parseFloat(temp)
       // 最大温度
       let maxTemperature = localStorage.raspiMaxTemperature
@@ -249,7 +306,7 @@ export default {
           toFixed: data.toFixed,
           textAlign: 'right',
           style: {
-            fill: '#ea6027',
+            fill: '#26fcd8',
             fontWeight: 'bold'
           },
           unit: data.total.unit
@@ -261,7 +318,7 @@ export default {
           toFixed: data.toFixed,
           textAlign: 'right',
           style: {
-            fill: '#26fcd8',
+            fill: '#ea6027',
             fontWeight: 'bold'
           },
           unit: data.num.unit

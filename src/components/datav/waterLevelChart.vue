@@ -92,7 +92,7 @@ export default {
     span {
       font-size: 35px;
       font-weight: bold;
-      color: #58a1ff;
+      color: #ff8d58;
       margin: 0 5px;
       margin-bottom: -5px;
     }
