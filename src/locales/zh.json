@@ -17,5 +17,37 @@
   },
   "waterLevelChart": {
     "title": "CPU使用情况监控"
+  },
+  "cards": {
+    "cpu": {
+      "title": "处理器使用率",
+      "total": "总频率",
+      "num": "当前频率",
+      "ring": "使用率"
+    },
+    "mem": {
+      "title": "内存使用率",
+      "total": "总容量",
+      "num": "当前使用",
+      "ring": "使用率"
+    },
+    "disk": {
+      "title": "硬盘",
+      "total": "总容量",
+      "num": "使用量",
+      "ring": "使用情况"
+    },
+    "cache": {
+      "title": "缓存使用情况",
+      "total": "总容量",
+      "num": "当前使用",
+      "ring": "使用率"
+    },
+    "temp": {
+      "title": "当前温度",
+      "total": "历史最高温度",
+      "num": "当前温度",
+      "ring": "温度"
+    }
   }
 }

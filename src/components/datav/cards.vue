@@ -140,7 +140,7 @@ export default {
         arr.push(this.getDiskInfo(diskUseInfo))
       }
 
-      // todo 获取缓存使用情况图标
+      // 获取缓存使用情况图标
       arr.push(this.getCacheInfo(val))
       // 获取温度使用情况图标
       arr.push(this.getTempInfo(val))
@@ -150,101 +150,12 @@ export default {
      * 缓存使用情况
      */
     getCacheInfo (val) {
-      // cpu当前频率
-      let armFreq = parseInt(val.cpuInfo.armFreq)
-      armFreq = armFreq / 1000
-      // cpu占用百分比
-      let cpuUseInfo = val.cpuUseInfo.replace('%', '')
-      cpuUseInfo = parseFloat(cpuUseInfo)
-      return this.createOneCard({
-        title: '缓存使用情况',
-        toFixed: 1,
-        total: {
-          name: '总频率',
-          value: armFreq,
-          unit: 'Ghz'
-        },
-        num: {
-          name: '当前频率',
-          value: armFreq * cpuUseInfo / 100,
-          unit: 'Ghz'
-        },
-        ring: {
-          name: '使用率 ',
-          value: cpuUseInfo
-        }
-      })
-    },
-    /**
-     * 获取树莓派硬盘使用情况
-     */
-    getDiskInfo (diskUseInfo) {
-      return this.createOneCard({
-        title: '硬盘' + diskUseInfo.diskPath,
-        toFixed: 1,
-        total: {
-          name: '总容量',
-          value: diskUseInfo.capacity.replace('GB', ''),
-          unit: 'GB'
-        },
-        num: {
-          name: '使用量',
-          value: diskUseInfo.used.replace('GB', ''),
-          unit: 'GB'
-        },
-        ring: {
-          name: '使用情况 ',
-          value: parseInt(diskUseInfo.used.replace('%', ''))
-        }
-      })
-    },
-    /**
-     * 获取温度使用情况图标
-     */
-    getTempInfo (val) {
-      // 当前温度
-      let temp = val.temperature.replace('℃', '')
-      temp = parseFloat(temp)
-      // 最大温度
-      let maxTemperature = localStorage.raspiMaxTemperature
-      if (maxTemperature == null || maxTemperature === undefined || maxTemperature === '') {
-        maxTemperature = temp
-        localStorage.raspiMaxTemperature = maxTemperature
-      }
-      maxTemperature = parseFloat(maxTemperature)
-      if (maxTemperature < temp) {
-        localStorage.raspiMaxTemperature = temp
-      }
-      return this.createOneCard({
-        title: '当前温度',
-        toFixed: 1,
-        total: {
-          name: '历史最高温度',
-          value: maxTemperature,
-          unit: '℃'
-        },
-        num: {
-          name: '当前温度',
-          value: temp,
-          unit: '℃'
-        },
-        ring: {
-          name: '温度 ',
-          value: temp / maxTemperature * 100
-        }
-      })
-    },
-    /**
-     * 内存使用率
-     */
-    getMemoryInfo (val) {
-      // cpu当前频率
-      let memUseInfo = val.memUseInfoList[0]
+      let memUseInfo = val.memUseInfoList[1]
       let total = parseInt(memUseInfo.total.replace('MB', '')) / 1024
       // cpu占用百分比
       let used = parseInt(memUseInfo.used.replace('MB', '')) / 1024
       return this.createOneCard({
-        title: '内存使用率',
+        title: '缓存使用情况',
         toFixed: 1,
         total: {
           name: '总容量',
@@ -263,6 +174,86 @@ export default {
       })
     },
     /**
+     * 获取树莓派硬盘使用情况
+     */
+    getDiskInfo (diskUseInfo) {
+      return this.createOneCard({
+        title: this.$i18n.t('cards.disk.title') + diskUseInfo.diskPath,
+        toFixed: 1,
+        total: {
+          name: this.$i18n.t('cards.disk.total'),
+          value: diskUseInfo.capacity.replace('GB', ''),
+          unit: 'GB'
+        },
+        num: {
+          name: this.$i18n.t('cards.disk.num'),
+          value: diskUseInfo.used.replace('GB', ''),
+          unit: 'GB'
+        },
+        ring: {
+          name: this.$i18n.t('cards.disk.ring') + ' ',
+          value: parseInt(diskUseInfo.used.replace('%', ''))
+        }
+      })
+    },
+    /**
+     * 获取温度使用情况图标
+     */
+    getTempInfo (val) {
+      // 当前温度
+      let temp = val.temperature.replace('℃', '')
+      temp = parseFloat(temp)
+      // 最大温度
+      let maxTemperature = val.temperatureMax
+
+      return this.createOneCard({
+        title: this.$i18n.t('cards.temp.title'),
+        toFixed: 1,
+        total: {
+          name: this.$i18n.t('cards.temp.total'),
+          value: maxTemperature,
+          unit: '℃'
+        },
+        num: {
+          name: this.$i18n.t('cards.temp.num'),
+          value: temp,
+          unit: '℃'
+        },
+        ring: {
+          name: this.$i18n.t('cards.temp.ring') + ' ',
+          value: temp / maxTemperature * 100
+        }
+      })
+    },
+    /**
+     * 内存使用率
+     */
+    getMemoryInfo (val) {
+      // cpu当前频率
+      let memUseInfo = val.memUseInfoList[0]
+      let total = parseInt(memUseInfo.total.replace('MB', '')) / 1024
+      // cpu占用百分比
+      let used = parseInt(memUseInfo.used.replace('MB', '')) / 1024
+      return this.createOneCard({
+        title: this.$i18n.t('cards.mem.title'),
+        toFixed: 1,
+        total: {
+          name: this.$i18n.t('cards.mem.total'),
+          value: total,
+          unit: 'GB'
+        },
+        num: {
+          name: this.$i18n.t('cards.mem.num'),
+          value: used,
+          unit: 'GB'
+        },
+        ring: {
+          name: this.$i18n.t('cards.mem.ring') + ' ',
+          value: used / total * 100
+        }
+      })
+    },
+    /**
      * 获取cpu使用情况图标
      */
     getCpuInfo (val) {
@@ -273,20 +264,20 @@ export default {
       let cpuUseInfo = val.cpuUseInfo.replace('%', '')
       cpuUseInfo = parseFloat(cpuUseInfo)
       return this.createOneCard({
-        title: '处理器使用率',
+        title: this.$i18n.t('cards.cpu.title'),
         toFixed: 1,
         total: {
-          name: '总频率',
+          name: this.$i18n.t('cards.cpu.total'),
           value: armFreq,
           unit: 'Ghz'
         },
         num: {
-          name: '当前频率',
+          name: this.$i18n.t('cards.cpu.num'),
           value: armFreq * cpuUseInfo / 100,
           unit: 'Ghz'
         },
         ring: {
-          name: '使用率 ',
+          name: this.$i18n.t('cards.cpu.ring') + ' ',
           value: cpuUseInfo
         }
       })
